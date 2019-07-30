@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
+Arch:
+  pkgs:
+    required:
+      states:
+        - packages.pkgs.repo.install
+      pkgs:
+        - yaourt     #https://archlinux.fr/yaourt-en
+
 Suse:
   pips:
     required:
