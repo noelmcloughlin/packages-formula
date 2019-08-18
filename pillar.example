@@ -61,6 +61,14 @@ packages:
     unwanted:
       - goodbye-world
 
+  golang:
+    get:
+      - github.com/golang/example/hello
+      - github.com/golang/example/outyet
+    clean:
+      - github.com/golang/example/hello
+      - github.com/golang/example/outyet
+
   npms:
     dir: /home/kitchen/npms      # The target directory in which to install the package, or None for global installation
     user: kitchen                # The user to run NPM with (and to assign to `dir`)
@@ -122,3 +130,9 @@ packages:
   remote_pkgs:
     zoom: 'https://zoom.us/client/latest/zoom_amd64.deb'
 
+  retry_options:
+    # https://docs.saltstack.com/en/latest/ref/states/requisites.html#retrying-states
+    attempts: 5
+    until: True
+    interval: 30
+    splay: 20

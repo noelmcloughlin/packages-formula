@@ -33,7 +33,7 @@ packages-archive-wanted-target-{{ package }}-directory:
       {%- if packages.tmpdir != '/tmp' %}
       - {{ packages.tmpdir }}
       {%- endif %}
-    - user: {{ 'root' if 'user' not in archive else archive.user }}
+    - user: {{ packages.rootuser if 'user' not in archive else archive.user }}
     - mode: {{ '0755' if 'mode' not in archive else archive.mode }}
     - makedirs: True
     - require_in:
@@ -45,11 +45,7 @@ packages-archive-wanted-download-{{ package }}:
   cmd.run:
     - name: curl -s -L -o {{ packages.tmpdir }}/{{ archivename }} {{ archive.dl.source }}
     - unless: test -f {{ packages.tmpdir }}/{{ archivename }}
-    - retry:
-        attempts: 2
-        until: True
-        interval: 60
-        splay: 10
+    - retry: {{ packages.retry_options|json }}
 
       {%- if 'hashsum' in archive.dl and archive.dl.hashsum %}
          {# see https://github.com/saltstack/salt/pull/41914 #}
@@ -89,13 +85,14 @@ packages-archive-wanted-download-{{ package }}:
     - name: {{ archive.dest }}/{{ archivename }}
     - source: {{ archive.dl.source }}
     - mode: {{ '0755' if archive.dl.format in ('bin',) else '0644' if 'mode' not in archive else archive.mode }}
-    - user: {{ 'root' if 'user' not in archive else archive.user }}
+    - user: {{ packages.rootuser if 'user' not in archive else archive.user }}
     - makedirs: True
        {%- if 'hashsum' in archive.dl and archive.dl.hashsum %}
     - source_hash: {{ archive.dl.hashsum }}
        {%- else %}
     - skip_verify: True
        {%- endif %}
+    - retry: {{ packages.retry_options|json }}
 
    {% endif %} 
 {%- endfor %}
