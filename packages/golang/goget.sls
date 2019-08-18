@@ -5,11 +5,11 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import packages with context %}
  
-    {%- for package in packages.golang.clean %}
+    {%- for package in packages.golang.goget %}
 
-packages-golang-clean-cmd-run-{{ package }}:
+packages-golang-goget-cmd-run-{{ package }}:
   cmd.run:
-    - name: go clean -i {{ package }}...
+    - name: go get {{ package }}
     - runas: {{ packages.rootuser }}
 
     {%- endfor %}

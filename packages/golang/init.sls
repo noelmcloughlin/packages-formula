@@ -3,4 +3,4 @@
 
 include:
   - .clean
-  - .get
+  - .goget

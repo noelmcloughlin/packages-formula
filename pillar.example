@@ -62,7 +62,7 @@ packages:
       - goodbye-world
 
   golang:
-    get:
+    goget:
       - github.com/golang/example/hello
       - github.com/golang/example/outyet
     clean:
