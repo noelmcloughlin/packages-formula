@@ -7,7 +7,7 @@
  
     {%- for package in packages.golang.goget %}
 
-packages-golang-goget-cmd-run-{{ package }}:
+packages-golang-goget-{{ package }}-cmd-run:
   cmd.run:
     - name: go get {{ package }}
     - runas: {{ packages.rootuser }}
